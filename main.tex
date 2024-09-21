@@ -1,0 +1,42 @@
+\documentclass[11pt]{article}
+
+%Header
+\input{header.tex}
+
+%Page width - margin
+\textwidth=459pt
+\oddsidemargin=0pt
+
+%Add bibliography
+\addbibresource{bibliography.bib}
+
+%Title, author and date
+\title{Template}
+\author{Tommaso Bambagiotti}
+
+
+\begin{document}
+
+	\maketitle
+	This is a reference \cite{art}.	
+	\clearpage %new page is created after flushing the float queues (ref. https://tex.stackexchange.com/questions/497746/comparison-between-newpage-clearpage-and-pagebreak-etc )
+
+	%---Sections-----------------------------
+	\input{Sections/1-section.tex}
+
+	%---Appendix------------------------------
+	\appendix
+	\appendixpage
+	\input{Appendices/a-appendix.tex}
+	\newpage
+	%input{Appendices/appendix_b.tex}
+
+	%\newpage
+	
+	%bliography-------------------------
+	\printbibliography
+
+	\newpage
+
+\end{document}
+

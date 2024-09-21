@@ -1,0 +1,95 @@
+%Font and colors
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{xcolor}
+
+%Figures
+\usepackage{graphicx}
+\graphicspath{{./Figures/}}
+
+% Math packages
+\usepackage{amsmath, amssymb, amsfonts}
+%\usepackage{dsfont} %for identity operator
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage{enumitem}
+
+%Import math customizations
+\input{math.tex}
+
+%Hyperlink
+\colorlet{linkequation}{blue}
+\usepackage[colorlinks]{hyperref}
+
+%Biblatex
+\usepackage{csquotes}
+\usepackage[
+ 	backend=biber,
+	style=numeric,
+	sorting=none
+	]{biblatex}
+
+%Appendix
+\usepackage{appendix}
+\def\chapterautorefname{Section}
+\def\sectionautorefname{Section}
+\def\appendixautorefname{Appendix}
+\renewcommand\appendixname{Appendix}
+\renewcommand\appendixtocname{Appendix}
+\renewcommand\appendixpagename{Appendix}
+
+% Importazione di etoolbox:
+% fornisce strumenti per manipolare comandi (e macro) LaTeX.
+% Patch di \hyper@makecurrent: 
+% aggiunge un controllo per vedere 
+% se si è in un'appendice e modifica il parametro corrente
+% (\Hy@param) di conseguenza (copy \Hy@param in 
+% \Hy@appendixstring).
+% Definizione di \@checkappendixparam: 
+% verifica se un contatore di sezione è uguale al parametro 
+% corrente e, se sì, lo modifica per indicare che è 
+% un'appendice.
+% Definizione del flag inappendix: 
+% utilizzato per tenere traccia 
+% se si è in un'appendice.
+% Attivazione del flag inappendix nei comandi 
+% \appendix e \subappendices: 
+% imposta il flag inappendix su true 
+% quando si entra in un'appendice.
+
+% begin appendix autoref patch [\autoref subsections in appendix](https://tex.stackexchange.com/questions/149807/autoref-subsections-in-appendix)
+\makeatletter
+\patchcmd{\hyper@makecurrent}{%
+	\ifx\Hy@param\Hy@chapterstring
+		\let\Hy@param\Hy@chapapp % \let<new-command>[[<spaces>]=]<original-command> copy original command in new command
+	\fi
+}{%
+	\iftoggle{inappendix}{%true-branch
+		% list the names of all sectioning counters here
+		\@checkappendixparam{chapter}%
+		\@checkappendixparam{section}%
+		\@checkappendixparam{subsection}%
+		\@checkappendixparam{subsubsection}%
+		\@checkappendixparam{paragraph}%
+		\@checkappendixparam{subparagraph}%
+	}{}%
+}{}{\errmessage{failed to patch}}
+
+\newcommand*{\@checkappendixparam}[1]{%
+	\def\@checkappendixparamtmp{#1} %\def <command> <parameter-text>{<replacement-text>} define new macro (a primitive)
+	\ifx\Hy@param\@checkappendixparamtmp
+		\let\Hy@param\Hy@appendixstring
+	\fi
+}
+\makeatletter
+
+\newtoggle{inappendix}
+\togglefalse{inappendix}
+
+\apptocmd{\appendix}{\toggletrue{inappendix}}{}{\errmessage{failed to patch}} % append to command 
+\apptocmd{\subappendices}{\toggletrue{inappendix}}{}{\errmessage{failed to patch}}
+% end appendix autoref patch
+
+\setcounter{tocdepth}{1}
