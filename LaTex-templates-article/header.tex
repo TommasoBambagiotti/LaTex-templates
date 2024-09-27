@@ -5,6 +5,9 @@
 \usepackage{lmodern}
 \usepackage{xcolor}
 
+%Customisation
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\clearpage} % new page at the end of each section
 %Figures
 \usepackage{graphicx}
 \graphicspath{{./Figures/}}
@@ -19,9 +22,6 @@
 %Import math customizations
 \input{math.tex}
 
-%Hyperlink
-\colorlet{linkequation}{blue}
-\usepackage[colorlinks]{hyperref}
 
 %Biblatex
 \usepackage{csquotes}
@@ -39,6 +39,10 @@
 \renewcommand\appendixname{Appendix}
 \renewcommand\appendixtocname{Appendix}
 \renewcommand\appendixpagename{Appendix}
+
+%Hyperlink
+\colorlet{linkequation}{blue}
+\usepackage[colorlinks]{hyperref}
 
 % Importazione di etoolbox:
 % fornisce strumenti per manipolare comandi (e macro) LaTeX.
